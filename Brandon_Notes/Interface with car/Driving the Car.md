@@ -85,7 +85,7 @@ ros2 run rviz2 rviz2
 
 ```bash
 cd user_test/ros2_ws
-ros2 run user_test Moving_Forward
+ros2 run user_test Opt_Moving_Forward
 ```
 
 - Press and hold L2 to run the code
