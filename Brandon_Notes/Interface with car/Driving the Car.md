@@ -28,7 +28,7 @@ Connect the battery,
 Flip the on switch, so the 2 toggle switches are in the on position
 
 Once the computer is at the home screem:
-- Create a folder in the Home directory with the same name as your ros project (e.g. user_test)
+- Create a folder in the Home directory with the same name as your ros project (e.g. user_test, but it can be a different name)
 - Copy the workspace you made (e.g. ros2_ws) and paste it in the folder you made
 
 Open a terminal and add the source line to the .bashrc
@@ -38,11 +38,14 @@ gedit ~/.bashrc
 Add the following line:
 `source ~/user_test/ros2_ws/install/setup.bash`
 
+- Change 'user_test' to your own folder name
+
 Now in the terminal, build your ROS workspace
 ```bash
 cd user_test/ros2_ws
 colcon build --symnlink-install
 ```
+Now close all terminals and start affresh
 
 ##### Step 4: Put the code onto the car
 Open 5 terminals (4 on the left, 1 big on the right)
@@ -81,6 +84,7 @@ ros2 run rviz2 rviz2
 ###### Terminal 5:
 
 ```bash
+cd user_test/ros2_ws
 ros2 run user_test Moving_Forward
 ```
 
