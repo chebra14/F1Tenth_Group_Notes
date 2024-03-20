@@ -69,6 +69,12 @@ source /opt/ros/foxy/setup.bash
 source install/local_setup.bash
 ros2 launch f1tenth_gym_ros gym_bridge_launch.py
 ```
+
+If you get an error similar to 'Can't find map', follow these instructions:
+Home -> sim_ws -> src -> f1then_gym_ros -> config -> sim.yaml
+change the map path on line 45 to:
+'/sim_ws/src/f1tenth_gym_ros/maps/levine'
+The install instructions for the sim_ws asked to change this to your directory, but this will fix the problem
 ###### Terminal 3:
 ```bash
 cd ros2_ws/src/user_test/user_test/
