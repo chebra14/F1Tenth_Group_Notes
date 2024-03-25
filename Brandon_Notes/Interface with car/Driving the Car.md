@@ -97,3 +97,29 @@ ros2 run user_test Opt_Moving_Forward
 - Turn the toggle to 'OFF' (Left) with ports facing you
 - Unplug the yellow battery connector
 - Unplug the JST battery connector
+
+##### Step 6: Using the car remotely
+
+- Get VNC viewer on a local machine (own laptop for example) to control the car remotely.
+	- https://www.realvnc.com/en/connect/download/viewer/
+- You don't have to make an account.
+
+- Turn on a personal hotspot to create a local network for your own machine and the car.
+	- This shouldn't take any internet data.
+
+- While the car is connected to it's monitor and accessories, navigate to its WiFi settings, and connect to your hotspot.
+	- Once the car is connected, open a terminal and type in the following command:
+
+```bash
+ifconfig
+```
+
+- look for the `wlan0:` section, and take note of the inet IP address. (e.g. 192.168.106.53).
+
+- Now go to  your personal machine, and connect to the same hotspot.
+- Open VNC viewer and type in the IP address from the car into the seach box.
+	- After doing this once, a window should be saved with that IP address so you don't have to type it again.
+- There will be a window that pops up.
+	- When the login window loads, type `jetson` as the password.
+
+- You can now disconnect the monitor, keyboard, and mouse from the car and use your own personal computer remotely, and can test the car on the floor.
