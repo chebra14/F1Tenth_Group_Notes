@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Odometry
@@ -20,7 +21,11 @@ class TESTNode(Node):
         self.joy_sub = self.create_subscription(Joy, "/joy", self.callbackJoy, 10)
         self.Joy7 = 0
 
-        # self.time = time.time()
+        self.start_time = time.perf_counter()
+        self.go_time = 3.0
+        self.set_speed = 1.0
+
+        self.get_logger().info("Initlialized")
 
     def callback(self, msg:Odometry):
 
@@ -39,7 +44,22 @@ class TESTNode(Node):
         #     cmd.drive.steering_angle = 0.0
 
         # cmd.drive.speed = 0.0
-        cmd.drive.speed = 2.0
+        
+        #cmd.drive.speed = 2.0
+
+        current_time = time.perf_counter()
+
+        if (current_time - self.start_time) < self.go_time:
+            cmd.drive.speed = self.set_speed
+            self.get_logger().info("Drive, Time:" + str(current_time - self.start_time))
+        else:
+            cmd.drive.speed = 0.0
+            self.get_logger().info("Stop, Time:" + str(current_time - self.start_time))
+
+            if (current_time - self.start_time) > self.go_time * 2.0:
+                self.start_time = time.perf_counter()
+                self.set_speed = self.set_speed * -1.0
+
         self.drive_pub.publish(cmd)
 
     #Change this function (4) from gym

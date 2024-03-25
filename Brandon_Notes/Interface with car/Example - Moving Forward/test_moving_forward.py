@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Odometry
@@ -14,7 +15,9 @@ class TESTNode(Node):
         self.pose_subscriber = self.create_subscription(Odometry, '/ego_racecar/odom', self.callback, 10)
         self.drive_pub = self.create_publisher(AckermannDriveStamped, "/drive", 10)
 
-        self.time = time.time()
+        self.start_time = time.perf_counter()
+        self.go_time = 2.0
+        self.set_speed = 0.2
 
     def callback(self, msg:Odometry):
 
@@ -28,13 +31,25 @@ class TESTNode(Node):
         
         yaw = self.euler_from_quaternion(quat_ori[0], quat_ori[1], quat_ori[2], quat_ori[3])
 
-        # if time.time() - self.time < 1.0:
-        #     cmd.drive.speed = 2.
+        # if self.Joy7 == 1:
+        #     cmd.drive.steering_angle = 0.2
         # else:
-        #     cmd.drive.speed = 0.0
+        #     cmd.drive.steering_angle = 0.0
 
-        # cmd.drive.steering_angle = 0.0
-        cmd.drive.speed = 2.0
+        # cmd.drive.speed = 0.0
+        
+        #cmd.drive.speed = 2.0
+
+        current_time = time.perf_counter()
+
+        if (current_time - self.start_time) < self.go_time:
+            cmd.drive.speed = self.set_speed
+        else:
+            cmd.drive.speed = 0.0
+
+            if (current_time - self.start_time) > self.go_time * 2.0:
+                self.start_time = time.perf_counter()
+
         self.drive_pub.publish(cmd)
 
 
